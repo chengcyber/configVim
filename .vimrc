@@ -2,11 +2,88 @@
 " Vimscript file settings ---------------------- {{{
 augroup filetype_vim
     autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
+    autocmd FileType vim setlocal foldmethod=marker foldlevel=1 foldlevelstart=1
 augroup END
 " }}}
 
+" Editor Settings ---------------------- {{{
+set macligatures
+set guifont=Fira\ Mono\ for\ Powerline:h14
+set bs=indent,eol,start " Allow backspacing over everything in insert mode
+set tabstop=2           " number of spaces a tab counts for
+set shiftwidth=2        " spaces of autoindents
+set expandtab           " turn a tab into spaces
+set smarttab            " smart tabl handling for indenting
+set smartindent         " smart auto indent
+set ruler               " show the cursor position
+set number              " show line number
+set relativenumber      " use relative number
+set cursorline          " highlight current line
+set laststatus=2        " always show status line
+syntax on
 
+""" highlight trailing space and remove them when save
+scriptencoding utf-8
+set encoding=utf-8
+" Removes trailing spaces
+function! TrimWhiteSpace()
+  %s/\s*$//
+  ''
+endfunction
+set list listchars=trail:·,extends:>
+autocmd FileWritePre * call TrimWhiteSpace()
+autocmd FileAppendPre * call TrimWhiteSpace()
+autocmd FilterWritePre * call TrimWhiteSpace()
+autocmd BufWritePre * call TrimWhiteSpace()
+
+""" Fold Settings
+set foldenable
+set foldmethod=indent
+" set foldcolumn=0
+setlocal foldlevel=1
+" set foldclose=all
+" close auto fold
+set foldlevelstart=99
+nnoremap <space> @=((foldclosed(line('.')) < 0) ?'zc':'zo')<cr>
+" }}}
+
+" Search Settings ---------------------- {{{
+set hlsearch            " highlight matches
+set incsearch           " highlight dynamically as pattern is typed
+set smartcase           " but become case sensitive if you type uppercase characters
+set ignorecase          " searches are case insentitve
+" }}}
+
+" FileType Settings ---------------------- {{{
+autocmd BufNewFile,BufRead *.es6,*.coffee set filetype=javascript
+"}}}
+
+" Mapping Settings ---------------------- {{{
+:let mapleader = ","
+
+" Normal Mode Mapping
+:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+:nnoremap <leader>sv :source $MYVIMRC<cr>
+""" Auto quote a word
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+""" Auto single quote
+nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
+""" grep
+" nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
+
+" Insert Mode Mapping
+inoremap jk <esc>
+
+" Operator Pending Mapping
+onoremap in( :<c-u>normal! f(vi(<cr>
+onoremap il( :<c-u>normal! F)vi(<cr>
+onoremap in" :<c-u>normal! f"vi"<cr>
+onoremap il" :<c-u>normal! F"vi"<cr>
+onoremap in{ :<c-u>normal! f{vi{<cr>
+onoremap il} :<c-u>normal! F}vi{<cr>
+" }}}
+
+" Vundle Settings  ---------------------- {{{
 " required
 set nocompatible        " be improved required
 filetype off            " required
@@ -20,7 +97,14 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 """"""""""""""""""""""""""""""
-
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'tpope/vim-fugitive'
 
 """"""""""""""""""""""""""""""
 " All of your Plugins must be added before the following line
@@ -37,41 +121,94 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-
-" Editor Settings ---------------------- {{{
-set bs=indent,eol,start " Allow backspacing over everything in insert mode
-set tabstop=2           " number of spaces a tab counts for
-set shiftwidth=2        " spaces of autoindents
-set expandtab           " turn a tab into spaces
-set smarttab            " smart tabl handling for indenting
-set smartindent         " smart auto indent
-set ruler               " show the cursor position
-set number              " show line number
-set cursorline          " highlight current line
-set laststatus=2        " always show status line
-syntax on
 " }}}
 
-" Search Settings ---------------------- {{{
-set hlsearch            " highlight matches
-set incsearch           " highlight dynamically as pattern is typed
-set smartcase           " but become case sensitive if you type uppercase characters
-set ignorecase          " searches are case insentitve
+" Nerdtree Settings ---------------------- {{{
+autocmd StdinReadPre * let s:std_in=1
+""" open a NERDTree automatically when vim starts up if no files were specified
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+""" open NERDTree automatically when vim starts up on opening a directory
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+""" shortcut to open NERDTree
+map <C-n> :NERDTreeToggle<CR>
+""" close vim if the only window left open is a NERDTree
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+""" auto display bookmarks
+let NERDTreeShowBookmarks=1
+let NERDTreeChDirMode=2
+""" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 " }}}
 
-" Mapping Settings ---------------------- {{{
-:let mapleader = ","
-:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-:nnoremap <leader>sv :source $MYVIMRC<cr>
-" Auto quote a word
-nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
-" Insert Mode Mapping
-inoremap jk <esc>
-" Operator Pending Mapping
-onoremap in( :<c-u>normal! f(vi(<cr>
-onoremap il( :<c-u>normal! F)vi(<cr>
-onoremap in" :<c-u>normal! f"vi"<cr>
-onoremap il" :<c-u>normal! F"vi"<cr>
-onoremap in{ :<c-u>normal! f{vi{<cr>
-onoremap il} :<c-u>normal! F}vi{<cr>
+" CtrlP Settings ---------------------- {{{
+let g:ctrlp_map = '<c-p>'
+" let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_max_depth = 40
+let g:ctrlp_max_files = 0
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:100'
+" Cache
+let g:ctrlp_cache_dir = $HOME . './cache/ctrlp'
+let g:ctrlp_clear_cache_on_exit = 0
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+" Close NERDTree window
+"let g:ctrlp_dont_split = 'NERD_tree_1'
+" open files via CtrlP only in writable buffer
+"function! CtrlPCommand()
+"  let c = 0
+"  let wincount = winnr('$')
+"  " Don't open it here if current buffer is not writable (e.g. NERDTREE)
+"  while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
+"    exec 'wincmd w'
+"    let c = c + 1
+"  endwhile
+"  exec 'CtrlP'
+"endfunction
+" let g:ctrlp_cmd = 'call CtrlPCommand()'
+let g:ctrlp_cmd = ':NERDTreeClose\|CtrlP'
+"set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+set wildignore+=*/node_modules/**/* " node_modules
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
 " }}}
+
+" Airline Settings ---------------------- {{{
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#branch#enabled = 1
+nnoremap <leader>n :bn<cr>
+nnoremap <leader>p :bp<cr>
+" }}}
+
+" EasyMotion Settings ---------------------- {{{
+let g:EasyMotion_smartcase = 1
+nnoremap <leader><leader>. <Plug>(easymotion-repeat)
+" }}}
+
