@@ -2,85 +2,8 @@
 " Vimscript file settings ---------------------- {{{
 augroup filetype_vim
     autocmd!
-    autocmd FileType vim setlocal foldmethod=marker foldlevel=1 foldlevelstart=1
+    autocmd FileType vim setlocal foldmethod=marker
 augroup END
-" }}}
-
-" Editor Settings ---------------------- {{{
-set macligatures
-set guifont=Fira\ Mono\ for\ Powerline:h14
-set bs=indent,eol,start " Allow backspacing over everything in insert mode
-set tabstop=2           " number of spaces a tab counts for
-set shiftwidth=2        " spaces of autoindents
-set expandtab           " turn a tab into spaces
-set smarttab            " smart tabl handling for indenting
-set smartindent         " smart auto indent
-set ruler               " show the cursor position
-set number              " show line number
-set relativenumber      " use relative number
-set cursorline          " highlight current line
-set laststatus=2        " always show status line
-syntax on
-
-""" highlight trailing space and remove them when save
-scriptencoding utf-8
-set encoding=utf-8
-" Removes trailing spaces
-function! TrimWhiteSpace()
-  %s/\s*$//
-  ''
-endfunction
-set list listchars=trail:·,extends:>
-autocmd FileWritePre * call TrimWhiteSpace()
-autocmd FileAppendPre * call TrimWhiteSpace()
-autocmd FilterWritePre * call TrimWhiteSpace()
-autocmd BufWritePre * call TrimWhiteSpace()
-
-""" Fold Settings
-set foldenable
-set foldmethod=indent
-" set foldcolumn=0
-setlocal foldlevel=1
-" set foldclose=all
-" close auto fold
-set foldlevelstart=99
-nnoremap <space> @=((foldclosed(line('.')) < 0) ?'zc':'zo')<cr>
-" }}}
-
-" Search Settings ---------------------- {{{
-set hlsearch            " highlight matches
-set incsearch           " highlight dynamically as pattern is typed
-set smartcase           " but become case sensitive if you type uppercase characters
-set ignorecase          " searches are case insentitve
-" }}}
-
-" FileType Settings ---------------------- {{{
-autocmd BufNewFile,BufRead *.es6,*.coffee set filetype=javascript
-"}}}
-
-" Mapping Settings ---------------------- {{{
-:let mapleader = ","
-
-" Normal Mode Mapping
-:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-:nnoremap <leader>sv :source $MYVIMRC<cr>
-""" Auto quote a word
-nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
-""" Auto single quote
-nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
-""" grep
-" nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
-
-" Insert Mode Mapping
-inoremap jk <esc>
-
-" Operator Pending Mapping
-onoremap in( :<c-u>normal! f(vi(<cr>
-onoremap il( :<c-u>normal! F)vi(<cr>
-onoremap in" :<c-u>normal! f"vi"<cr>
-onoremap il" :<c-u>normal! F"vi"<cr>
-onoremap in{ :<c-u>normal! f{vi{<cr>
-onoremap il} :<c-u>normal! F}vi{<cr>
 " }}}
 
 " Vundle Settings  ---------------------- {{{
@@ -105,6 +28,12 @@ Plugin 'mileszs/ack.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'tpope/vim-fugitive'
+Plugin 'mattn/emmet-vim'
+Plugin 'bluz71/vim-moonfly-colors'
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
 
 """"""""""""""""""""""""""""""
 " All of your Plugins must be added before the following line
@@ -121,6 +50,110 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+" }}}
+
+" Editor Settings ---------------------- {{{
+set macligatures
+set guifont=Fira\ Mono\ for\ Powerline:h14
+set bs=indent,eol,start " Allow backspacing over everything in insert mode
+set tabstop=2           " number of spaces a tab counts for
+set shiftwidth=2        " spaces of autoindents
+set expandtab           " turn a tab into spaces
+set smarttab            " smart tabl handling for indenting
+set smartindent         " smart auto indent
+set ruler               " show the cursor position
+set number              " show line number
+set relativenumber      " use relative number
+set cursorline          " highlight current line
+set laststatus=2        " always show status line
+syntax on
+" Color Scheme
+colorscheme moonfly
+
+""" highlight trailing space and remove them when save
+scriptencoding utf-8
+set encoding=utf-8
+" Removes trailing spaces
+function! TrimWhiteSpace()
+  %s/\s*$//
+  ''
+endfunction
+set list
+set listchars=trail:·,extends:>,tab:▸\ ,eol:¬
+autocmd FileWritePre * call TrimWhiteSpace()
+autocmd FileAppendPre * call TrimWhiteSpace()
+autocmd FilterWritePre * call TrimWhiteSpace()
+autocmd BufWritePre * call TrimWhiteSpace()
+
+""" Fold Settings
+set nofoldenable
+set foldmethod=indent
+set foldnestmax=10
+" set foldcolumn=0
+setlocal foldlevel=2
+" set foldclose=all
+nnoremap <leader>z za
+" }}}
+
+" Search Settings ---------------------- {{{
+set hlsearch            " highlight matches
+set incsearch           " highlight dynamically as pattern is typed
+set smartcase           " but become case sensitive if you type uppercase characters
+set ignorecase          " searches are case insentitve
+" }}}
+
+" FileType Settings ---------------------- {{{
+
+autocmd BufNewFile,BufRead *.es6,*.coffee set filetype=javascript
+autocmd BufNewFile,BufRead *.wxml set filetype=html
+
+"}}}
+
+" Mapping Settings ---------------------- {{{
+:let mapleader = " "
+
+" Normal Mode Mapping
+:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+:nnoremap <leader>sv :source $MYVIMRC<cr>
+""" Auto quote a word
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+""" Auto single quote
+nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
+""" grep
+" nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
+
+" Insert Mode Mapping
+inoremap jk <esc>
+
+" Operator Pending Mapping
+onoremap in( :<c-u>normal! f(vi(<cr>
+onoremap il( :<c-u>normal! F)vi(<cr>
+onoremap in" :<c-u>normal! f"vi"<cr>
+onoremap il" :<c-u>normal! F"vi"<cr>
+onoremap in{ :<c-u>normal! f{vi{<cr>
+onoremap il} :<c-u>normal! F}vi{<cr>
+onoremap in' :<c-u>normal! f'vi'<cr>
+onoremap il' :<c-u>normal! F'vi'<cr>
+
+" Navigation between windows
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+" }}}
+
+" Abbreviation Settings ---------------------- {{{
+:iabbrev adn and
+:iabbrev waht what
+:iabbrev sytle style
+" }}}
+
+" YouCompleteMe Settings ---------------------- {{{
+""" remove default TAB to solve conflict with UltiSnips
+"let g:ycm_key_list_select_completion = ['<Down>']
+"let g:ycm_key_list_previous_completion = ['<Up>']
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 " }}}
 
 " Nerdtree Settings ---------------------- {{{
@@ -165,8 +198,9 @@ let g:ctrlp_max_depth = 40
 let g:ctrlp_max_files = 0
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:100'
 " Cache
-let g:ctrlp_cache_dir = $HOME . './cache/ctrlp'
-let g:ctrlp_clear_cache_on_exit = 0
+"let g:ctrlp_cache_dir = $HOME . './cache/ctrlp'
+"let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_use_caching = 0
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
   " Use Ag over Grep
@@ -194,7 +228,7 @@ set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 set wildignore+=*/node_modules/**/* " node_modules
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc|jpg|png|jpeg)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
 " }}}
@@ -208,7 +242,26 @@ nnoremap <leader>p :bp<cr>
 " }}}
 
 " EasyMotion Settings ---------------------- {{{
-let g:EasyMotion_smartcase = 1
-nnoremap <leader><leader>. <Plug>(easymotion-repeat)
+" Disable default mappings
+"let g:EasyMotion_do_mapping = 0
+:let g:EasyMotion_smartcase = 1
+"nnoremap s <Plug>(easymotion-overwin-f2)
+" }}}
+
+" Emmet Settings ---------------------- {{{
+let g:user_emmet_leader_key='<c-e>'
+" let g:user_emmet_install_global=0
+" autocmd FileType html,css EmmetInstall
+" }}}
+
+" Ack Settings ---------------------- {{{
+nnoremap <leader>a :Ack!<space>
+" }}}
+
+" UltiSnips Settings ---------------------- {{{
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " }}}
 
