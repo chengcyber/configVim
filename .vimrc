@@ -249,7 +249,7 @@ call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 " CtrlP Settings ---------------------- {{{
 let g:ctrlp_map = '<c-p>'
 " let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_working_path_mode = ''
 let g:ctrlp_max_depth = 40
 let g:ctrlp_max_files = 0
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:100'
@@ -262,7 +262,18 @@ if executable('ag')
   " Use Ag over Grep
   set grepprg=ag\ --nogroup\ --nocolor
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  "let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+        \ --ignore .git
+        \ --ignore .DS_Store
+        \ --ignore tmp
+        \ --ignore images
+        \ --ignore vendor
+        \ --ignore vcr
+        \ --ignore "tags"
+        \ --ignore vcr_cassettes
+        \ --ignore "**/*.(png|jpeg|jpg|gif|bmp)"
+        \ -g ""'
 endif
 " Close NERDTree window
 "let g:ctrlp_dont_split = 'NERD_tree_1'
