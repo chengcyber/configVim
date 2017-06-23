@@ -200,18 +200,31 @@ let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 " }}}
 
 " Nerdtree Settings ---------------------- {{{
+
 autocmd StdinReadPre * let s:std_in=1
 """ open a NERDTree automatically when vim starts up if no files were specified
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 """ open NERDTree automatically when vim starts up on opening a directory
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-""" shortcut to open NERDTree
-map <C-n> :NERDTreeToggle<CR>
 """ close vim if the only window left open is a NERDTree
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-""" auto display bookmarks
+
+" Nerd tree setting
 let NERDTreeShowBookmarks=1
-let NERDTreeChDirMode=2
+let NERDTreeHighlightCursorline = 1
+let NERDTreeCascadeOpenSingleChildDir = 0
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDChristmasTree = 1
+let NERDTreeChDirMode = 2
+let NERDTreeQuitOnOpen=1
+
+" Key mapping
+nnoremap <leader>l :NERDTreeFind<CR>
+nnoremap <leader>B :NERDTreeFromBookmark<Space>
+""" shortcut to open NERDTree
+noremap <C-n> :NERDTreeToggle<CR>
+
 """ NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
  exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
