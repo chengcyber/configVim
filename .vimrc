@@ -66,9 +66,23 @@ set number              " show line number
 set relativenumber      " use relative number
 set cursorline          " highlight current line
 set laststatus=2        " always show status line
+set mouse=a
 syntax on
 " Color Scheme
 colorscheme moonfly
+
+set list
+set listchars=extends:❯,precedes:❮,trail:·,extends:>,tab:▸\ ,eol:¬
+set showbreak=↪
+set t_Co=256
+
+" Backups
+"set backup
+"set noswapfile
+"
+"set undodir=~/.vim/tmp/undo//
+"set backupdir=~/.vim/tmp/backup//
+"set directory=~/.vim/tmp/swap//
 
 """ highlight trailing space and remove them when save
 scriptencoding utf-8
@@ -78,8 +92,6 @@ function! TrimWhiteSpace()
   %s/\s*$//
   ''
 endfunction
-set list
-set listchars=trail:·,extends:>,tab:▸\ ,eol:¬
 autocmd FileWritePre * call TrimWhiteSpace()
 autocmd FileAppendPre * call TrimWhiteSpace()
 autocmd FilterWritePre * call TrimWhiteSpace()
@@ -93,6 +105,37 @@ set foldnestmax=10
 setlocal foldlevel=2
 " set foldclose=all
 nnoremap <leader>z za
+
+" Save when losing focus
+au FocusLost * :silent! wall
+
+" Resize splits when the window is resized
+au VimResized * :wincmd =
+
+""" Wild Complete
+set wildmenu
+set wildmode=list:longest
+
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.dll,*.manifest " compiled object files
+set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*.DS_Store                       " OSX bullshit
+
+set wildignore+=tags
+set wildignore+=*/tmp/*
+set wildignore+=*/vendor/*
+set wildignore+=*/node_modules/*
+set wildignore+=*/spec/vcr/*
+set wildignore+=*/public/*
+set wildignore+=*/chef/*
+set wildignore+=*/coverage/*
+set wildignore+=*/vcr_cassettes/*
+set wildignore+=*.png,*.jpg,*.otf,*.woff,*.jpeg,*.orig
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+"set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+set wildignore+=*/node_modules/**/* " node_modules
 " }}}
 
 " Search Settings ---------------------- {{{
@@ -223,9 +266,6 @@ endif
 "endfunction
 " let g:ctrlp_cmd = 'call CtrlPCommand()'
 let g:ctrlp_cmd = ':NERDTreeClose\|CtrlP'
-"set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
-set wildignore+=*/node_modules/**/* " node_modules
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/]\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc|jpg|png|jpeg)$',
