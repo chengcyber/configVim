@@ -152,18 +152,41 @@ autocmd BufNewFile,BufRead *.wxml set filetype=html
 
 "}}}
 
-" Mapping Settings ---------------------- {{{
+" Key Mapping Settings ---------------------- {{{
 :let mapleader = " "
 
 " Normal Mode Mapping
 :nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 :nnoremap <leader>sv :source $MYVIMRC<cr>
+""" add a blank line above
+:nnoremap <leader>o O<esc>j
+""" spilit window
+:nnoremap <leader>S :split<cr>
+:nnoremap <leader>V :vsplit<cr>
+""" traverse change list
+:nnoremap g; g;zz
+:nnoremap g, g,zz
+""" Keep search matches in the middle of the window
+nnoremap n nzzzv
+nnoremap N Nzzzv
+""" tab
+:nnoremap <leader>t :tabnew<cr>
+:nnoremap <leader>k :tabclose<cr>
+:nnoremap <leader>N :tabnext<cr>
+:nnoremap <leader>P :tabprevious<cr>
+""" Quickfix
+nnoremap <c-q> :copen<cr>
 """ Auto quote a word
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 """ Auto single quote
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 """ grep
 " nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
+""" copy file path
+"copies just the filename.
+nnoremap <leader>cs :let @*=expand("%")<CR>
+"copies the filename including its full path.
+nnoremap <leader>cl :let @*=expand("%:p")<CR>
 
 " Insert Mode Mapping
 inoremap jk <esc>
