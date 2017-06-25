@@ -360,3 +360,6 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 " }}}
 
+" Indent-Guide Settings ---------------------- {{{
+:let g:indent_guides_enable_on_vim_startup = 1
+" }}}
