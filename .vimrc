@@ -29,6 +29,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
 Plugin 'mattn/emmet-vim'
 Plugin 'bluz71/vim-moonfly-colors'
 " Track the engine.
