@@ -34,6 +34,7 @@ Plugin 'bluz71/vim-moonfly-colors'
 Plugin 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
+Plugin 'nathanaelkane/vim-indent-guides'
 
 """"""""""""""""""""""""""""""
 " All of your Plugins must be added before the following line
