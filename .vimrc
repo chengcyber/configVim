@@ -331,10 +331,16 @@ nnoremap <leader>p :bp<cr>
 " }}}
 
 " EasyMotion Settings ---------------------- {{{
+":map <localleader> <Plug>(easymotion-prefix)
 " Disable default mappings
 "let g:EasyMotion_do_mapping = 0
 :let g:EasyMotion_smartcase = 1
 "nnoremap s <Plug>(easymotion-overwin-f2)
+:nmap f <Plug>(easymotion-s)
+:vmap f <Plug>(easymotion-s)
+":map / <Plug>(easymotion-sn)
+":omap / <Plug>(easymotion-tn)
+
 " }}}
 
 " Emmet Settings ---------------------- {{{
