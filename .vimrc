@@ -27,6 +27,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'haya14busa/incsearch.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'mattn/emmet-vim'
 Plugin 'bluz71/vim-moonfly-colors'
@@ -362,4 +363,26 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Indent-Guide Settings ---------------------- {{{
 :let g:indent_guides_enable_on_vim_startup = 1
+" }}}
+
+" Incsearch Settings ---------------------- {{{
+" :h g:incsearch#auto_nohlsearch
+set hlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+
+function! s:noregexp(pattern) abort
+  return '\V' . escape(a:pattern, '\')
+endfunction
+
+function! s:config() abort
+  return {'converters': [function('s:noregexp')]}
+endfunction
+
+noremap <silent><expr> z/ incsearch#go(<SID>config())
 " }}}
