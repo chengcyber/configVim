@@ -26,17 +26,24 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'haya14busa/incsearch.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'mattn/emmet-vim'
-Plugin 'bluz71/vim-moonfly-colors'
+" Color Schemes
+" :colorshceme <space> <C-d> display all color available
+"Plugin 'bluz71/vim-moonfly-colors'
+"Plugin 'kudabux/vim-srcery-drk'
+Plugin 'sonph/onehalf', {'rtp': 'vim/'}
 " Track the engine.
 Plugin 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
 Plugin 'nathanaelkane/vim-indent-guides'
+" Syntax
+Plugin 'leafgarland/typescript-vim'
 
 """"""""""""""""""""""""""""""
 " All of your Plugins must be added before the following line
@@ -57,7 +64,7 @@ filetype plugin indent on    " required
 
 " Editor Settings ---------------------- {{{
 set macligatures
-set guifont=Fira\ Mono\ for\ Powerline:h14
+set guifont=Inconsolata\ for\ Powerline:h16
 set bs=indent,eol,start " Allow backspacing over everything in insert mode
 set tabstop=2           " number of spaces a tab counts for
 set shiftwidth=2        " spaces of autoindents
@@ -72,7 +79,11 @@ set laststatus=2        " always show status line
 set mouse=a
 syntax on
 " Color Scheme
-colorscheme moonfly
+" colorscheme moonfly
+" colorscheme srcery-drk"
+colorscheme onehalfdark
+let g:airline#extension#tabline#enabled=1
+let g:airline_theme='onehalfdark'
 
 set list
 set listchars=extends:❯,precedes:❮,trail:·,extends:>,tab:▸\ ,eol:¬
@@ -80,20 +91,19 @@ set showbreak=↪
 set t_Co=256
 
 " Backups
-"set backup
-"set noswapfile
-"
-"set undodir=~/.vim/tmp/undo//
-"set backupdir=~/.vim/tmp/backup//
-"set directory=~/.vim/tmp/swap//
+set backup
+set noswapfile
+
+set undodir=~/.vim/tmp/undo//
+set backupdir=~/.vim/tmp/backup//
+set directory=~/.vim/tmp/swap//
 
 """ highlight trailing space and remove them when save
 scriptencoding utf-8
 set encoding=utf-8
 " Removes trailing spaces
 function! TrimWhiteSpace()
-  %s/\s*$//
-  ''
+  %s/\s\+$//e
 endfunction
 autocmd FileWritePre * call TrimWhiteSpace()
 autocmd FileAppendPre * call TrimWhiteSpace()
@@ -109,8 +119,8 @@ setlocal foldlevel=2
 " set foldclose=all
 nnoremap <leader>z za
 
-" Save when losing focus
-au FocusLost * :silent! wall
+" Auto Save when losing focus
+"au FocusLost * :silent! wall
 
 " Resize splits when the window is resized
 au VimResized * :wincmd =
@@ -387,3 +397,7 @@ endfunction
 
 noremap <silent><expr> z/ incsearch#go(<SID>config())
 " }}}
+
+" https://coderwall.com/p/faceag/format-json-in-vim
+nmap =j :%!python -m json.tool<CR>
+
