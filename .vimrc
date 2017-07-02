@@ -20,10 +20,13 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 """"""""""""""""""""""""""""""
+" Need compile, see https://github.com/Valloric/YouCompleteMe
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'ctrlpvim/ctrlp.vim'
+" Need compile, see https://github.com/JazzCore/ctrlp-cmatcher
+Plugin 'JazzCore/ctrlp-cmatcher'
 Plugin 'mileszs/ack.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -311,6 +314,14 @@ if executable('ag')
         \ --ignore "**/*.(png|jpeg|jpg|gif|bmp)"
         \ -g ""'
 endif
+" use cmatch extension to speed up
+" note: it does not work on regex mode
+let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+" switch the clear cache and toggle regex shortcut
+let g:ctrlp_prompt_mappings = {
+  \ 'ToggleRegex()':        ['<F5>'],
+  \ 'PrtClearCache()':      ['<c-r>'],
+  \ }
 " Close NERDTree window
 "let g:ctrlp_dont_split = 'NERD_tree_1'
 " open files via CtrlP only in writable buffer
@@ -363,6 +374,9 @@ let g:user_emmet_leader_key='<c-e>'
 
 " Ack Settings ---------------------- {{{
 nnoremap <leader>a :Ack!<space>
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 " }}}
 
 " UltiSnips Settings ---------------------- {{{

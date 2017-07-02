@@ -24,7 +24,15 @@ fi
 echo "Step3: update/install plugins via Vundle"
 vim +PluginInstall!
 
-echo "Step4: complie YouCompleteMe"
+echo "Step4: compile plugins"
+echo "======= ctrlp-cmathcer ======="
+echo "https://github.com/JazzCore/ctrlp-cmatcher"
+export CFLAGS=-Qunused-arguments
+export CPPFLAGS=-Qunused-arguments
+cd $HOME/.vim/bundle/ctrlp-cmatcher
+./install.sh
+
+echo "====== YouCompleteMe ======"
 echo "if error, goto following link and compile yourself"
 echo "https://github.com/Valloric/YouCompleteMe"
 cd $HOME/.vim/bundle/YouCompleteMe
