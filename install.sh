@@ -46,3 +46,4 @@ python install.py --tern-completer
 echo "Done!"
 echo "manually install ag engine to speed up"
 echo "brew install the_silver_searcher"
+echo "brew install ack"
