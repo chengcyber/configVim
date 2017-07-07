@@ -186,8 +186,8 @@ autocmd BufNewFile,BufRead *.wxml set filetype=html
 nnoremap n nzzzv
 nnoremap N Nzzzv
 """ tab
-:nnoremap <leader>t :tabnew<cr>
-:nnoremap <leader>k :tabclose<cr>
+:nnoremap <leader>T :tabnew<cr>
+:nnoremap <leader>K :tabclose<cr>
 :nnoremap <leader>N :tabnext<cr>
 :nnoremap <leader>P :tabprevious<cr>
 """ Quickfix
