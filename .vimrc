@@ -23,7 +23,6 @@ Plugin 'VundleVim/Vundle.vim'
 " Need compile, see https://github.com/Valloric/YouCompleteMe
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'ctrlpvim/ctrlp.vim'
 " Need compile, see https://github.com/JazzCore/ctrlp-cmatcher
 Plugin 'JazzCore/ctrlp-cmatcher'
@@ -120,7 +119,6 @@ set foldnestmax=10
 " set foldcolumn=0
 setlocal foldlevel=2
 " set foldclose=all
-nnoremap <leader>z za
 
 " Auto Save when losing focus
 "au FocusLost * :silent! wall
@@ -174,6 +172,8 @@ autocmd BufNewFile,BufRead *.wxml set filetype=html
 " Normal Mode Mapping
 :nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 :nnoremap <leader>sv :source $MYVIMRC<cr>
+""" quti and close current buff
+:nnoremap K :quit<cr>
 """ add a blank line above
 :nnoremap <leader>o O<esc>j
 """ spilit window
@@ -259,10 +259,10 @@ let NERDTreeChDirMode = 2
 let NERDTreeQuitOnOpen=1
 
 " Key mapping
-nnoremap <leader>l :NERDTreeFind<CR>
-nnoremap <leader>B :NERDTreeFromBookmark<Space>
 """ shortcut to open NERDTree
-noremap <C-n> :NERDTreeToggle<CR>
+noremap <D-d> :NERDTreeToggle<CR>
+nnoremap <leader>l :NERDTreeFind<CR>
+nnoremap <leader>P :NERDTreeFromBookmark<Space>
 
 """ NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
