@@ -34,6 +34,8 @@ Plugin 'haya14busa/incsearch.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'mattn/emmet-vim'
+Plugin 'godlygeek/tabular'
+Plugin 'reasonml-editor/vim-reason'
 " Color Schemes
 " :colorshceme <space> <C-d> display all color available
 "Plugin 'bluz71/vim-moonfly-colors'
@@ -173,7 +175,7 @@ autocmd BufNewFile,BufRead *.wxml set filetype=html
 :nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 :nnoremap <leader>sv :source $MYVIMRC<cr>
 """ quti and close current buff
-:nnoremap K :quit<cr>
+":nnoremap K :quit<cr>
 """ add a blank line above
 :nnoremap <leader>o O<esc>j
 """ spilit window
@@ -410,6 +412,20 @@ function! s:config() abort
 endfunction
 
 noremap <silent><expr> z/ incsearch#go(<SID>config())
+" }}}
+
+" Tabular Settings ---------------------- {{{
+if exists(":Tabularize")
+  nmap <leader>A :Tabularize<space>/
+"  nmap <Leader>a= :Tabularize /=<CR>
+"  vmap <Leader>a= :Tabularize /=<CR>
+"  nmap <Leader>a: :Tabularize /:\zs<CR>
+"  vmap <Leader>a: :Tabularize /:\zs<CR>
+endif
+" }}}
+
+" Vim-Reason Settings ---------------------- {{{
+autocmd FileType reason map <buffer> <D-M> :ReasonPrettyPrint<Cr>
 " }}}
 
 " https://coderwall.com/p/faceag/format-json-in-vim
