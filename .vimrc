@@ -152,6 +152,16 @@ set wildignore+=*.png,*.jpg,*.otf,*.woff,*.jpeg,*.orig
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 "set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 set wildignore+=*/node_modules/**/* " node_modules
+
+" exclude some bobcat files
+set wildignore+=*/build/*
+set wildignore+=*/wx-build/*
+set wildignore+=*/bower_components/*
+set wildignore+=*/tmp/*
+set wildignore+=*/bobcat-api/app/assets/javascripts/v4/*
+set wildignore+=*/app/assets/javascripts/v4/*
+set wildignore+=*/bobcat-fe/js/vendor/*
+set wildignore+=*/.cache-loader/*
 " }}}
 
 " Search Settings ---------------------- {{{
