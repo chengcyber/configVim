@@ -264,7 +264,7 @@ let NERDTreeQuitOnOpen=1
 """ shortcut to open NERDTree
 noremap <D-d> :NERDTreeToggle<CR>
 nnoremap <leader>l :NERDTreeFind<CR>
-nnoremap <leader>P :NERDTreeFromBookmark<Space>
+nnoremap <leader>B :NERDTreeFromBookmark<Space>
 
 """ NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
