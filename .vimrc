@@ -36,6 +36,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'mattn/emmet-vim'
 Plugin 'godlygeek/tabular'
 Plugin 'reasonml-editor/vim-reason'
+Plugin 'jreybert/vimagit'
 " Color Schemes
 " :colorshceme <space> <C-d> display all color available
 "Plugin 'bluz71/vim-moonfly-colors'
@@ -240,6 +241,7 @@ nnoremap <C-l> <C-w>l
 :iabbrev adn and
 :iabbrev waht what
 :iabbrev sytle style
+:iabbrev consle console
 " }}}
 
 " YouCompleteMe Settings ---------------------- {{{
@@ -441,3 +443,6 @@ autocmd FileType reason map <buffer> <D-M> :ReasonPrettyPrint<Cr>
 " https://coderwall.com/p/faceag/format-json-in-vim
 nmap =j :%!python -m json.tool<CR>
 
+" Magit Settings ---------------------- {{{
+nnoremap <leader>gg :Magit<CR>
+" }}}
