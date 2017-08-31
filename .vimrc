@@ -116,11 +116,11 @@ autocmd FilterWritePre * call TrimWhiteSpace()
 autocmd BufWritePre * call TrimWhiteSpace()
 
 """ Fold Settings
-set nofoldenable
-set foldmethod=indent
-set foldnestmax=10
+" set nofoldenable
+" set foldmethod=indent
+" set foldnestmax=10
 " set foldcolumn=0
-setlocal foldlevel=2
+" setlocal foldlevel=2
 " set foldclose=all
 
 " Auto Save when losing focus
