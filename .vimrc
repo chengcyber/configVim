@@ -37,11 +37,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'godlygeek/tabular'
 Plugin 'reasonml-editor/vim-reason'
 Plugin 'jreybert/vimagit'
-" Color Schemes
-" :colorshceme <space> <C-d> display all color available
-"Plugin 'bluz71/vim-moonfly-colors'
-"Plugin 'kudabux/vim-srcery-drk'
-Plugin 'sonph/onehalf', {'rtp': 'vim/'}
+
 " Track the engine.
 Plugin 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
@@ -51,6 +47,14 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'leafgarland/typescript-vim'
 " Buffer Delete
 Plugin 'moll/vim-bbye'
+
+" Color Schemes
+" :colorshceme <space> <C-d> display all color available
+"Plugin 'bluz71/vim-moonfly-colors'
+"Plugin 'kudabux/vim-srcery-drk'
+"Plugin 'sonph/onehalf', {'rtp': 'vim/'}
+"Plugin 'altercation/vim-colors-solarized'
+Plugin 'morhetz/gruvbox'
 
 """"""""""""""""""""""""""""""
 " All of your Plugins must be added before the following line
@@ -71,7 +75,7 @@ filetype plugin indent on    " required
 
 " Editor Settings ---------------------- {{{
 set macligatures
-set guifont=Inconsolata\ for\ Powerline:h16
+set guifont=Fira\ Mono\ for\ Powerline:h14
 set bs=indent,eol,start " Allow backspacing over everything in insert mode
 set tabstop=2           " number of spaces a tab counts for
 set shiftwidth=2        " spaces of autoindents
@@ -84,13 +88,6 @@ set relativenumber      " use relative number
 set cursorline          " highlight current line
 set laststatus=2        " always show status line
 set mouse=a
-syntax on
-" Color Scheme
-" colorscheme moonfly
-" colorscheme srcery-drk"
-colorscheme onehalfdark
-let g:airline#extension#tabline#enabled=1
-let g:airline_theme='onehalfdark'
 
 set list
 set listchars=extends:❯,precedes:❮,trail:·,extends:>,tab:▸\ ,eol:¬
@@ -452,3 +449,25 @@ nnoremap <leader>gg :Magit<CR>
 " bbye Settings ---------------------- {{{
 :nnoremap <Leader>q :Bdelete<CR>
 " }}}
+
+" colorscheme theme Settings ---------------------- {{{
+syntax on
+" Color Scheme
+" colorscheme moonfly
+" colorscheme srcery-drk"
+" colorscheme onehalfdark
+colorscheme gruvbox
+let g:airline#extension#tabline#enabled=1
+let g:airline_theme='gruvbox'
+
+"syntax enable
+"set background=light
+"colorscheme solarized
+"
+"if has('gui_running')
+"    set background=light
+"else
+"    set background=dark
+"endif
+
+""" }}}
