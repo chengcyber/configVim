@@ -49,6 +49,8 @@ Plugin 'honza/vim-snippets'
 Plugin 'nathanaelkane/vim-indent-guides'
 " Syntax
 Plugin 'leafgarland/typescript-vim'
+" Buffer Delete
+Plugin 'moll/vim-bbye'
 
 """"""""""""""""""""""""""""""
 " All of your Plugins must be added before the following line
@@ -445,4 +447,8 @@ nmap =j :%!python -m json.tool<CR>
 
 " Magit Settings ---------------------- {{{
 nnoremap <leader>gg :Magit<CR>
+" }}}
+
+" bbye Settings ---------------------- {{{
+:nnoremap <Leader>q :Bdelete<CR>
 " }}}
