@@ -46,7 +46,7 @@ Plugin 'nathanaelkane/vim-indent-guides'
 " Syntax
 Plugin 'leafgarland/typescript-vim'
 " Buffer Delete
-Plugin 'moll/vim-bbye'
+" Plugin 'moll/vim-bbye'
 
 " Color Schemes
 " :colorshceme <space> <C-d> display all color available
@@ -447,7 +447,7 @@ nnoremap <leader>gg :Magit<CR>
 " }}}
 
 " bbye Settings ---------------------- {{{
-:nnoremap <Leader>q :Bdelete<CR>
+" :nnoremap <Leader>q :Bdelete<CR>
 " }}}
 
 " colorscheme theme Settings ---------------------- {{{
